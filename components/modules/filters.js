@@ -1,57 +1,30 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { mockMovies } from "@/lib/content";
+import { useRouter } from "next/router";
 
-function Filters() {
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
-
-  const filteredMovies = useMemo(() => {
-    let result = [...mockMovies];
-
-    //   Genre Filter
-    if (selectedGenre) {
-      result = result.filter((movie) =>
-        movie.genre.some((g) => g === selectedGenre),
-      );
-    }
-
-    //   Year Filter
-    if (selectedYear) {
-      switch (selectedYear) {
-        case "newest":
-          result = result.filter((movie) => movie.year >= 2020);
-          break;
-        case "middle":
-          result = result.filter((movie) => movie.year >= 2000);
-          break;
-        case "oldest":
-          result = result.filter((movie) => movie.year < 2000);
-          break;
-      }
-    }
-
-    return result;
-  }, [selectedGenre, selectedYear]);
-
-  const handleReset = () => {
-    setSelectedGenre("");
-    setSelectedYear("");
-  };
-
+function Filters({
+  selectedGenre,
+  selectedYear,
+  onGenreChange,
+  onYearChange,
+  onReset,
+}) {
   const hasActiveFilter = selectedGenre || selectedYear;
 
   return (
-    <>
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl">
+    <div className="mb-12">
+      <div className="flex flex-col sm:flex-row gap-6 max-w-3xl mx-auto">
         {/* Genre Filter */}
         <div className="flex-1">
-          <label className="block text-xl text-white mb-2 pl-1">Genre</label>
+          <label className="block text-sm uppercase tracking-widest text-gray-400 mb-2 pl-1">
+            Genre
+          </label>
           <select
             value={selectedGenre}
-            onChange={(e) => setSelectedGenre(e.target.value)}
-            className="w-full bg-gray-400 border border-gray-700 focus:border-purple-500 
-                rounded-2xl px-6 py-4 text-base outline-none cursor-pointer 
-                transition-all duration-300 appearance-none"
+            onChange={(e) => onGenreChange(e.target.value)}
+            className="w-full bg-gray-900 border border-gray-700 focus:border-purple-500 
+                       rounded-2xl px-6 py-4 text-base outline-none cursor-pointer 
+                       transition-all duration-300 appearance-none text-white"
           >
             <option value="">All Genres</option>
             <option value="Action">Action</option>
@@ -62,34 +35,40 @@ function Filters() {
             <option value="Thriller">Thriller</option>
           </select>
         </div>
-        {/* Sort Filter */}
+
+        {/* Era / Year Filter */}
         <div className="flex-1">
-          <label className="block text-xl text-white mb-2 pl-1">Sort By</label>
+          <label className="block text-sm uppercase tracking-widest text-gray-400 mb-2 pl-1">
+            Era
+          </label>
           <select
             value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="w-full bg-gray-400 border border-gray-700 focus:border-purple-500 
-                rounded-2xl px-6 py-4 text-base outline-none cursor-pointer 
-                transition-all duration-300 appearance-none"
+            onChange={(e) => onYearChange(e.target.value)}
+            className="w-full bg-gray-900 border border-gray-700 focus:border-purple-500 
+                       rounded-2xl px-6 py-4 text-base outline-none cursor-pointer 
+                       transition-all duration-300 appearance-none text-white"
           >
-            <option value="">Sort By Year</option>
+            <option value="">All Eras</option>
             <option value="newest">Newest Era</option>
+            <option value="middle">Middle Era</option>
             <option value="oldest">Oldest Era</option>
-            <option value="rating-high">Middle Era</option>
           </select>
         </div>
+
+        {/* Reset Button */}
         {hasActiveFilter && (
-          <div className="flex items-end pb-1">
+          <div className="flex items-end">
             <button
-              className="px-5 py-3 text-purple-400 hover:text-purple-300 transition-colors text-sm font-medium underline-offset-4 hover:underline"
-              onClick={handleReset}
+              onClick={onReset}
+              className="px-6 py-4 text-purple-400 hover:text-purple-300 
+                         transition-colors text-sm font-medium underline-offset-4 hover:underline"
             >
-              Reset
+              Reset Filters
             </button>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

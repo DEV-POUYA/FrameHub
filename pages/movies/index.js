@@ -1,7 +1,7 @@
-import MovieCards from "@/components/modules/cards";
+import MovieBox from "@/components/templates/movieBox";
 
 function ListOfMovies() {
-  return <MovieCards />;
+  return <MovieBox />;
 }
 
 export default ListOfMovies;
