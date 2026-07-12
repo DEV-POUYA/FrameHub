@@ -7,7 +7,7 @@ function SearchBar({ searchTerm, onSearchChange, onSearchSubmit }) {
   return (
     <div className="mb-12">
       <div className="max-w-2xl mx-auto">
-        <form onSubmit={onSearchSubmit} className="relative">
+        <form onSubmit={handleSubmit} className="relative">
           <div className="relative group">
             <input
               type="search"

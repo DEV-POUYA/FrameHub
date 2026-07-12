@@ -1,6 +1,10 @@
+import { editSlug } from "@/lib/handyfun";
 import Image from "next/image";
+import Link from "next/link";
 
 function MovieCard({ movie }) {
+  const slug = editSlug(movie.title);
+
   return (
     <div
       className="group bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 
@@ -8,14 +12,15 @@ function MovieCard({ movie }) {
                  hover:shadow-xl hover:shadow-purple-950/50"
     >
       <div className="relative aspect-[2/3] overflow-hidden">
-        <Image
-          src={movie.poster}
-          alt={movie.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        />
-
+        <Link href={`/movies/${slug}`}>
+          <Image
+            src={movie.poster}
+            alt={movie.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          />
+        </Link>
         <div className="absolute top-4 right-4 bg-black/80 text-white text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
           ⭐ {movie.rating}
         </div>

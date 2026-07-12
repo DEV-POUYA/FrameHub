@@ -1,7 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
-import { mockMovies } from "@/lib/content";
-import { useRouter } from "next/router";
-
 function Filters({
   selectedGenre,
   selectedYear,

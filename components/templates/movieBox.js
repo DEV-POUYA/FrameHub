@@ -9,7 +9,11 @@ function MovieBox() {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [visibleCount, setVisibleCount] = useState(12);
 
+  // pagination
+  const ITEMS_PER_LOAD = 12;
+ 
   const router = useRouter();
   const { search, year, genre } = router.query;
 
@@ -17,9 +21,8 @@ function MovieBox() {
     setSelectedGenre(genre);
     setSelectedYear(year);
     setSearchTerm(search);
-  }, [genre, year , search]);
-
-
+    setVisibleCount(12)
+  }, [genre, year, search]);
 
   const filteredMovies = useMemo(() => {
     let result = [...mockMovies];
@@ -37,7 +40,6 @@ function MovieBox() {
         movie.genre.some((g) => g === selectedGenre),
       );
     }
-
 
     // Year Filter
     if (selectedYear) {
@@ -94,6 +96,14 @@ function MovieBox() {
     updateFilters(searchTerm, "", "");
   };
 
+  const displayedMovies = useMemo(() => {
+    return filteredMovies.slice(0, visibleCount);
+  }, [filteredMovies, visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
+  };
+
   return (
     <div className="min-h-screen bg-gray-950 py-12 px-6">
       <div className="max-w-7xl mx-auto">
@@ -121,21 +131,34 @@ function MovieBox() {
           onReset={handleReset}
         />
 
-        
-
         {/* Movies Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {filteredMovies.length > 0 ? (
-            filteredMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))
-          ) : (
-            <div className="col-span-full text-center py-20">
-              <p className="text-2xl text-gray-400">No movies found</p>
-              <p className="text-gray-500 mt-2">Try changing your filters</p>
-            </div>
-          )}
+          {displayedMovies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
         </div>
+
+        {visibleCount < filteredMovies.length && (
+          <div className="flex justify-center mt-16">
+            <button
+              onClick={handleLoadMore}
+              className="px-10 py-4 bg-purple-600 hover:bg-purple-500 active:bg-purple-700 
+                 text-white font-medium rounded-2xl transition-all duration-200 
+                 text-lg flex items-center gap-3 group"
+            >
+              See More Movies
+              <span className="group-hover:translate-y-0.5 transition-transform">
+                ↓
+              </span>
+            </button>
+          </div>
+        )}
+
+        {filteredMovies.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-2xl text-gray-400">No movies found</p>
+          </div>
+        )}
       </div>
     </div>
   );
