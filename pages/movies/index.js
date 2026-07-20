@@ -1,10 +1,13 @@
 import MovieBox from "@/components/templates/movieBox";
-import { useRouter } from "next/router";
+import { userStatus } from "@/utils/auth";
 
 function ListOfMovies() {
- 
-
-  return <MovieBox />;
+  return (
+    <>
+      <MovieBox />
+    </>
+  );
 }
 
 export default ListOfMovies;
+

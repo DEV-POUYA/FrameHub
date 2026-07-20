@@ -1,4 +1,4 @@
-import { editSlug } from "@/lib/handyfun";
+import { editSlug } from "@/lib/form-tools";
 import Image from "next/image";
 import Link from "next/link";
 
