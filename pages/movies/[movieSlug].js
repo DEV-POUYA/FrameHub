@@ -2,8 +2,20 @@ import MovieDetails from "@/components/templates/MovieDetails";
 import { mockMovies } from "@/lib/content";
 import { editSlug } from "@/lib/form-tools";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 function MovieDetailedPage() {
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/user")
+      .then((res) => res.json())
+      .then((data) => setIsAuth(data.status === "success"))
+      .catch((err) => {
+        console.error("error in page access:", err);
+      });
+  }, []);
+
   const router = useRouter();
   const { movieSlug } = router.query;
 
@@ -15,26 +27,9 @@ function MovieDetailedPage() {
 
   return (
     <div>
-      <MovieDetails movie={movie} />
+      <MovieDetails movie={movie} isAuth={isAuth} />
     </div>
   );
 }
 
 export default MovieDetailedPage;
-
-export async function getServerSideProps(context) {
-  const { token } = context.req.cookies;
-  const secretKey = process.env.SECRET_KEY;
-
-  const userStatus = userToken(token, secretKey);
-
-  if (!userStatus) {
-    return {
-      redirect: { destination: "/", permanent: false },
-    };
-  }
-
-  return {
-    props: { userStatus },
-  };
-}

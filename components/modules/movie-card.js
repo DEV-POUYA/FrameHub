@@ -11,7 +11,7 @@ function MovieCard({ movie }) {
                  hover:border-purple-600 transition-all duration-300 
                  hover:shadow-xl hover:shadow-purple-950/50"
     >
-      <div className="relative aspect-[2/3] overflow-hidden">
+      <div className="relative aspect-2/3 overflow-hidden">
         <Link href={`/movies/${slug}`}>
           <Image
             src={movie.poster}
@@ -27,9 +27,11 @@ function MovieCard({ movie }) {
       </div>
 
       <div className="p-6">
-        <h3 className="font-semibold text-xl text-white line-clamp-2 mb-2 group-hover:text-purple-400 transition-colors">
-          {movie.title}
-        </h3>
+        <Link href={`/movies/${slug}`}>
+          <h3 className="font-semibold text-xl text-white line-clamp-2 mb-2 group-hover:text-purple-400 transition-colors">
+            {movie.title}
+          </h3>
+        </Link>
 
         <div className="flex justify-between items-center text-sm text-gray-400 mb-4">
           <span>{movie.year}</span>

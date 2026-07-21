@@ -1,5 +1,4 @@
 import MovieBox from "@/components/templates/movieBox";
-import { userStatus } from "@/utils/auth";
 
 function ListOfMovies() {
   return (
@@ -10,4 +9,3 @@ function ListOfMovies() {
 }
 
 export default ListOfMovies;
-

@@ -2,21 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function HeaderLayout() {
   const [currentStatus, setCurrentStatus] = useState(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     fetch("/api/user")
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch");
         return res.json();
       })
       .then((data) => {
-        console.log("Full API Response:", data); // ← Debug full response
+        console.log("Full API Response:", data);
         if (data.status === "success") {
-          setCurrentStatus(data); // Keep full object
-          console.log("currentStatus updated to:", data); // ← See updated value
+          setCurrentStatus(data);
         } else {
           setCurrentStatus(null);
         }
@@ -27,7 +28,30 @@ export default function HeaderLayout() {
       });
   }, []);
 
-  console.log("Current currentStatus value:", currentStatus); // ←
+  let username =
+    currentStatus?.data?.email?.split("@")[0] ||
+    currentStatus?.data?.email ||
+    "User";
+
+  async function logoutHandler() {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        currentStatus(null);
+        router.push("/");
+      } else {
+        console.error("Logout failed:", data);
+        alert(data.message || "Logout failed. Please try again.");
+      }
+    } catch (err) {
+      console.error("Network error during logout:", err);
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50  bg-gray-900 border-b border-gray-800 backdrop-blur-md">
@@ -45,15 +69,15 @@ export default function HeaderLayout() {
 
         {currentStatus ? (
           <div className="flex items-center gap-4">
-            <span className="text-purple-400 font-medium">
-              Hi, {currentStatus.data.username || currentStatus.data.email}
-            </span>
-            <Link
-              href="/logout"
-              className="text-sm text-red-400 hover:text-red-500"
+            <span className="text-purple-400 font-medium">Hi, {username}</span>
+            <button
+              onClick={logoutHandler}
+              className="px-6 py-2.5 text-sm font-medium text-red-400 hover:text-red-500 
+             border border-red-400/30 hover:border-red-500 rounded-2xl 
+             transition-all duration-200 hover:bg-red-500/5 active:scale-95 cursor-pointer"
             >
               Logout
-            </Link>
+            </button>
           </div>
         ) : (
           <Link

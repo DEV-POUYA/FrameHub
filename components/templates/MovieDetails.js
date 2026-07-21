@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 
-function MovieDetails({ movie }) {
+function MovieDetails({ movie, isAuth }) {
   if (!movie) {
     return (
       <div className="text-center py-20 text-white">
@@ -16,7 +17,7 @@ function MovieDetails({ movie }) {
           {/* Poster Section */}
           <div className="lg:col-span-5">
             <div className="sticky top-8">
-              <div className="relative aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-gray-800">
+              <div className="relative aspect-2/3 rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-gray-800">
                 <Image
                   src={movie.poster}
                   alt={movie.title}
@@ -31,14 +32,15 @@ function MovieDetails({ movie }) {
           {/* Content Section */}
           <div className="lg:col-span-7">
             <div className="space-y-8">
-              {/* Title & Meta */}
               <div>
                 <h1 className="text-5xl font-bold tracking-tight mb-4">
                   {movie.title}
                 </h1>
                 <div className="flex items-center gap-4 text-gray-400">
                   <span className="text-2xl">{movie.year}</span>
-                  <span className="text-emerald-400 font-medium">{movie.language}</span>
+                  <span className="text-emerald-400 font-medium">
+                    {movie.language}
+                  </span>
                   {movie.rating && (
                     <span className="flex items-center gap-1">
                       ⭐ <span className="text-yellow-400 font-semibold">{movie.rating}</span>
@@ -85,25 +87,40 @@ function MovieDetails({ movie }) {
           </div>
         </div>
 
-        {/* Review / Vision Section */}
+        {/* Comment / Review Section */}
         <div className="mt-20 max-w-3xl">
           <h3 className="text-2xl font-semibold mb-6">Share Your Thoughts</h3>
-          <p className="text-gray-400 mb-4">
-            Write your vision or review about this movie/series
-          </p>
-          
-          <textarea
-            name="postContent"
-            rows={6}
-            className="w-full bg-gray-900 border border-gray-700 focus:border-purple-500 
-                       rounded-3xl px-6 py-5 text-white placeholder-gray-400 
-                       outline-none resize-y min-h-[140px] transition-all"
-            placeholder="What did you think about this masterpiece?..."
-          />
 
-          <button className="mt-4 bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-2xl font-medium transition-colors">
-            Post Review
-          </button>
+          {isAuth ? (
+            <>
+              <p className="text-gray-400 mb-4">
+                Write your vision or review about this movie/series
+              </p>
+              <textarea
+                name="postContent"
+                rows={6}
+                className="w-full bg-gray-900 border border-gray-700 focus:border-purple-500 
+                           rounded-3xl px-6 py-5 text-white placeholder-gray-400 
+                           outline-none resize-y min-h-35 transition-all"
+                placeholder="What did you think about this masterpiece?..."
+              />
+              <button className="mt-4 bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-2xl font-medium transition-colors">
+                Post Review
+              </button>
+            </>
+          ) : (
+            <div className="bg-gray-900 border border-gray-800 rounded-3xl p-10 text-center">
+              <p className="text-xl text-gray-300 mb-4">
+                You must sign in to share your thoughts
+              </p>
+              <Link
+                href="/signin"
+                className="inline-block mt-4 px-8 py-3 bg-purple-600 hover:bg-purple-500 rounded-2xl font-medium transition-colors"
+              >
+                Go to Login
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
