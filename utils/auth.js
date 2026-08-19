@@ -18,7 +18,7 @@ function userToken(token, secretKey) {
       email: userStateVerification.email,
     };
   } catch (err) {
-    console.log("session state: ", err);
+    console.error("session state: ", err);
   }
 }
 

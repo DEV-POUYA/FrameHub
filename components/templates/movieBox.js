@@ -13,7 +13,7 @@ function MovieBox() {
 
   // pagination
   const ITEMS_PER_LOAD = 12;
- 
+
   const router = useRouter();
   const { search, year, genre } = router.query;
 

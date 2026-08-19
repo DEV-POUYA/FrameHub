@@ -11,7 +11,7 @@ async function handler(req, res) {
   try {
     await connectDB();
   } catch (err) {
-    console.log("Database state: ", err);
+    console.error("Database state: ", err);
     return res.status(500).json({ message: "Error In Database Connection!" });
   }
 

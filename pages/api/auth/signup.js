@@ -113,7 +113,7 @@ async function handler(req, res) {
       .status(201)
       .json({ status: "success", message: "user created successfully" });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res
       .status(500)
       .json({ status: "failed", message: "Failed to create user" });

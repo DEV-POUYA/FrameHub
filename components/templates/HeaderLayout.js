@@ -15,7 +15,6 @@ export default function HeaderLayout() {
         return res.json();
       })
       .then((data) => {
-        console.log("Full API Response:", data);
         if (data.status === "success") {
           setCurrentStatus(data);
         } else {
