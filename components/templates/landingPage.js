@@ -1,54 +1,192 @@
-import Link from "next/link";
+import Image from "next/image";
+import heroImage from "@/public/hero.jpg";
+import HeaderLayout from "./HeaderLayout";
 
-export default function LandingPage() {
+function LandingPage() {
   return (
-    // Full‑screen section with a rich gradient background
-    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-16">
-      {/* Subtle overlay pattern for extra texture (optional) */}
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10" />
+    <>
+      <section>
+        <HeaderLayout />
+      </section>
+      <section
+        className="
+        relative
+        isolate
+        mx-auto
+        w-[calc(100%-2rem)]
+        max-w-[1750px]
+        overflow-hidden
+        rounded-[22px]
+        border
+        border-white/10
+        bg-black
+        min-h-130
+        sm:min-h-145
+        sm:mt-5
+        lg:min-h-175
+      "
+      >
+        {/* Background image */}
+        <Image
+          src={heroImage}
+          alt="background-image"
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 1750px"
+          className="object-cover object-center"
+        />
 
-      {/* Card container that holds all content */}
-      <div className="relative z-10 w-full max-w-2xl rounded-3xl border border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-lg md:p-12">
-        {/* Movie icon / emoji */}
-        <div className="mb-6 text-center text-6xl">🎬</div>
+        {/* Cinematic dark overlay */}
+        <div
+          className="
+          absolute
+          inset-0
+          z-0
+          bg-linear-to-r
+          from-black
+          via-black/65
+          to-black/10
+        "
+        />
 
-        {/* Main heading */}
-        <h1 className="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-center text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
-          Movies Hub
-        </h1>
+        {/* Bottom darkness */}
+        <div
+          className="
+          absolute
+          inset-x-0
+          bottom-0
+          h-[55%]
+          z-0
+          bg-linear-to-t
+          from-black/85
+          via-black/40
+          to-transparent
+        "
+        />
 
-        {/* Subtitle / description */}
-        <p className="mt-6 text-center text-lg leading-relaxed text-gray-300 sm:text-xl">
-          The one place where film lovers gather to share thoughts, reviews, and
-          honest comments on every movie they watch.
-        </p>
-
-        {/* CTA button */}
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/movies"
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/25 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+        {/* Content */}
+        <div
+          className="
+          relative
+          z-10
+          flex
+          min-h-130
+          items-end
+          sm:min-h-145
+          lg:min-h-175
+        "
+        >
+          <div
+            className="
+            w-full
+            max-w-190
+            px-6
+            pb-10
+            sm:px-10
+            sm:pb-14
+            lg:px-20
+            lg:pb-16
+          "
           >
-            {/* Ripple/shine effect on hover */}
-            <span className="absolute inset-0 -translate-x-full skew-x-12 bg-white/20 transition-transform duration-700 group-hover:translate-x-full" />
-            <span className="relative flex items-center gap-2">
-              Go To Movie List
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+            {/* Title */}
+            <h1
+              className="
+              mb-4
+              text-4xl
+              font-bold
+              tracking-tight
+              text-white
+              sm:text-5xl
+              lg:text-[58px]
+              lg:leading-[1.05]
+            "
+            >
+              Movie Hub
+            </h1>
+
+            {/* Description */}
+            <p
+              className="
+              mb-6
+              max-w-195
+              text-base
+              font-medium
+              leading-6
+              text-white
+              sm:text-lg
+              sm:leading-7
+              lg:text-[21px]
+              lg:leading-7
+            "
+            >
+              Movies move us like nothing else can, whether they’re scary,
+              funny, dramatic, romantic or anywhere in-between. So many titles,
+              so much to experience.
+            </p>
+
+            {/* Form */}
+            <form
+              className="
+              flex
+              w-full
+              max-w-175
+              flex-col
+              gap-3
+              sm:flex-row
+            "
+            >
+              {/* Email */}
+              <input
+                type="email"
+                name="email"
+                placeholder="yourMail@gmail.com"
+                required
+                className="
+                h-14
+                min-w-0
+                flex-1
+                rounded-full
+                border
+                border-white/40
+                bg-black/40
+                px-6
+                py-2
+                text-base
+                text-white
+                outline-none
+                backdrop-blur-sm
+                placeholder:text-white/65
+                transition
+                focus:border-white
+                focus:bg-black/55
+              "
+              />
+
+              {/* CTA */}
+              <button
+                type="submit"
+                className="
+                h-14
+                min-w-20
+                rounded-full
+                bg-[#E50914]
+                px-8
+                text-base
+                font-bold
+                text-white
+                transition
+                hover:bg-[#f40612]
+                active:scale-[0.98]
+              "
               >
-                <path
-                  fillRule="evenodd"
-                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </Link>
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+        
+      </section>
+    </>
+  )
 }
+export default LandingPage;

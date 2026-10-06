@@ -4,6 +4,7 @@ import Link from "next/link";
 
 function MovieCard({ movie }) {
   const slug = editSlug(movie.title);
+  console.log("deailss:" , movie.title)
 
   return (
     <div
